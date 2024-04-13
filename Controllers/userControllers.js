@@ -6,6 +6,7 @@ const { pool } = require("../config/dbConfig");
 const nodemailer = require("nodemailer");
 
 async function addUser(name, username, email, password) {
+    console.log("b");
     const client = await pool.connect();
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -15,7 +16,7 @@ async function addUser(name, username, email, password) {
             VALUES ($1, $2, $3, $4)`,
             [name, username, email, hashedPassword]
         );
-        // console.log("Hello"+result.rows[0]);
+        console.log("Hello" + result.rows[0]);
     } finally {
         client.release();
     }
@@ -38,6 +39,7 @@ async function updateUser(username, avatar, location) {
 
 
 async function addDesc(username, description) {
+    console.log("addDEsc Stared");
     const client = await pool.connect();
     try {
         const result = await client.query(
@@ -104,6 +106,7 @@ async function Mail(email) {
 
 const register = (req, res) => {
     const { name, username, email, password } = req.body;
+    console.log("Vivek")
     console.log(req.body);
     addUser(name, username, email, password)
         .then(() => {
@@ -121,7 +124,6 @@ const userDescription = (req, res) => {
     console.log(username, description);
     addDesc(username, description)
         .then(() => {
-
             res.status(200).json("Description Added!");
         })
         .catch((error) => {
@@ -136,7 +138,6 @@ const create = (req, res) => {
     console.log(email, username, avatar, location);
     updateUser(username, avatar, location)
         .then(() => {
-
             res.status(200).json("Avatar and Location Addded!");
         })
         .catch((error) => {
