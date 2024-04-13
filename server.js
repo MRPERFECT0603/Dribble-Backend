@@ -14,7 +14,8 @@ app.use(
 
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    // origin: "http://localhost:3000",
+    origin: "https://661a5831e487e377b1cac370--dribblevivek.netlify.app",
     credentials: true,
 }));
 
